@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.pyc
+target/
+*.class
+*.log
+*.jar
+*.war
+*.iml
+.DS_Store
+.env
+*.db
+.idea/
+.vscode/
+
