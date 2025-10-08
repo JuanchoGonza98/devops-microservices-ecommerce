@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  orders-service:
+    build: ./orders-service
+    container_name: orders-service
+    ports:
+      - "8083:8083"
+    environment:
+      - PYTHONUNBUFFERED=1
+    networks:
+      - ecommerce-network
+
+networks:
+  ecommerce-network:
+    driver: bridge
+
