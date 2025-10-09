@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  users-service:
+    image: juanchogonza98/e-commerce:users-service
+    container_name: users-service
+    ports:
+      - "8084:8084"
+    environment:
+      - PYTHONUNBUFFERED=1
+    networks:
+      - users-network
+
+networks:
+  users-network:
+    driver: bridge
