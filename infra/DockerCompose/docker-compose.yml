@@ -1,0 +1,116 @@
+version: "3.9"
+
+services:
+  # === PRODUCTS SERVICE ===
+  products-service:
+    image: juanchogonza98/products-service:1.0
+    container_name: products-service
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://products-db:5432/productsdb
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    depends_on:
+      - products-db
+
+  products-db:
+    image: postgres:16
+    container_name: products-db
+    environment:
+      - POSTGRES_DB=productsdb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - products_data:/var/lib/postgresql/data
+
+  # === PAYMENTS SERVICE ===
+  payments-service:
+    image: juanchogonza98/payments-service:1.0
+    container_name: payments-service
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://payments-db:5432/paymentsdb
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - PRODUCTS_API_URL=http://products-service:8081
+    depends_on:
+      - payments-db
+      - products-service
+
+  payments-db:
+    image: postgres:16
+    container_name: payments-db
+    environment:
+      - POSTGRES_DB=paymentsdb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - payments_data:/var/lib/postgresql/data
+
+  # === ORDERS SERVICE ===
+  orders-service:
+    image: juanchogonza98/orders-service:1.0
+    container_name: orders-service
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://orders-db:5432/ordersdb
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - PRODUCTS_API_URL=http://products-service:8081
+      - PAYMENTS_API_URL=http://payments-service:8082
+    depends_on:
+      - orders-db
+      - products-service
+      - payments-service
+
+  orders-db:
+    image: postgres:16
+    container_name: orders-db
+    environment:
+      - POSTGRES_DB=ordersdb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - orders_data:/var/lib/postgresql/data
+
+  # === USERS SERVICE ===
+  users-service:
+    image: juanchogonza98/users-service:1.0
+    container_name: users-service
+    ports:
+      - "8084:8084"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://users-db:5432/usersdb
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    depends_on:
+      - users-db
+
+  users-db:
+    image: postgres:16
+    container_name: users-db
+    environment:
+      - POSTGRES_DB=usersdb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - users_data:/var/lib/postgresql/data
+
+  # === NOTIFICATIONS SERVICE ===
+  notifications-service:
+    image: juanchogonza98/notifications-service:1.0
+    container_name: notifications-service
+    ports:
+      - "8000:8000"
+    depends_on:
+      - orders-service
+
+volumes:
+  products_data:
+  payments_data:
+  orders_data:
+  users_data:
+
