@@ -14,7 +14,7 @@ services:
 
   # === ORDERS SERVICE ===
   orders-service:
-    image: juanchogonza98/e-commerce:order-servicelatest
+    image: juanchogonza98/e-commerce:order-servicefinal
     container_name: orders-service
     ports:
       - "8083:8083"
@@ -30,7 +30,7 @@ services:
 
   # === PAYMENTS SERVICE ===
   payments-service:
-    image: juanchogonza98/e-commerce:payment-service
+    image: juanchogonza98/e-commerce:payment-servicefinal
     container_name: payments-service
     ports:
       - "8082:8082"
