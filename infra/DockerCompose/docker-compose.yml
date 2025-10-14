@@ -3,38 +3,44 @@ version: "3.9"
 services:
   # === PRODUCTS SERVICE ===
   products-service:
-    image: juanchogonza98/e-commerce:products-servicev1.0.0
+    image: juanchogonza98/e-commerce:product-servicev1.0.0
     container_name: products-service
     ports:
       - "8081:8081"
     environment:
       - SERVER_PORT=8081
-
-  # === PAYMENTS SERVICE ===
-  payments-service:
-    image: juanchogonza98/e-commerce:payment-servicelatest
-    container_name: payments-service
-    ports:
-      - "8082:8082"
-    environment:
-      - SERVER_PORT=8082
-      - PRODUCTS_API_URL=http://products-service:8081
-    depends_on:
-      - products-service
+    networks:
+      - ecommerce-net
 
   # === ORDERS SERVICE ===
   orders-service:
-    image: juanchogonza98/e-commerce:order-service
+    image: juanchogonza98/e-commerce:order-servicelatest
     container_name: orders-service
     ports:
       - "8083:8083"
     environment:
       - SERVER_PORT=8083
       - PRODUCTS_API_URL=http://products-service:8081
-      - PAYMENTS_API_URL=http://payments-service:8082
+      - USERS_API_URL=http://users-service:8084
     depends_on:
       - products-service
-      - payments-service
+      - users-service
+    networks:
+      - ecommerce-net
+
+  # === PAYMENTS SERVICE ===
+  payments-service:
+    image: juanchogonza98/e-commerce:payment-service
+    container_name: payments-service
+    ports:
+      - "8082:8082"
+    environment:
+      - SERVER_PORT=8082
+      - ORDERS_API_URL=http://orders-service:8083
+    depends_on:
+      - orders-service
+    networks:
+      - ecommerce-net
 
   # === USERS SERVICE ===
   users-service:
@@ -44,14 +50,9 @@ services:
       - "8084:8084"
     environment:
       - SERVER_PORT=8084
+    networks:
+      - ecommerce-net
 
-  # === NOTIFICATIONS SERVICE ===
-  notifications-service:
-    image: juanchogonza98/e-commerce:notifications-servicelatest
-    container_name: notifications-service
-    ports:
-      - "8000:8000"
-    environment:
-      - SERVER_PORT=8000
-    depends_on:
-      - orders-service
+networks:
+  ecommerce-net:
+    driver: bridge
