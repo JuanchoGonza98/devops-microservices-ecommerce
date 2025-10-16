@@ -1,64 +1,52 @@
 package com.ecommerce.paymentservice.service;
 
+import com.ecommerce.paymentservice.model.PaymentRequest;
 import com.ecommerce.paymentservice.model.PaymentResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Service
 public class PaymentService {
 
     private final RestTemplate restTemplate = new RestTemplate();
-    private static final String ORDERS_API_URL = "http://orders-service:8083";
-    private static final String NOTIFICATIONS_API_URL = "http://notifications-service:8000";
+    private static final String ORDERS_API_URL = "http://orders-service:8083/orders";
 
-    public PaymentResponse processPayment(int orderId) {
-        try {
-            // ✅ 1. Verificar si la orden existe
-            ResponseEntity<String> orderResponse =
-                    restTemplate.getForEntity(ORDERS_API_URL + "/orders/" + orderId, String.class);
+    public PaymentResponse processPayment(PaymentRequest request) {
+        // 1️⃣ Validar la existencia de la orden
+        String orderUrl = ORDERS_API_URL + "/" + request.getOrder_id();
+        ResponseEntity<Object> orderResponse = restTemplate.getForEntity(orderUrl, Object.class);
 
-            if (orderResponse.getStatusCode() != HttpStatus.OK) {
-                return new PaymentResponse(orderId, "FAILED", "Order not found.");
-            }
-
-            // ✅ 2. Simular procesamiento del pago
-            Thread.sleep(1000); // Simula una transacción bancaria
-            System.out.println("💳 Payment processed for order " + orderId);
-
-            // ✅ 3. Actualizar estado de la orden a PAID
-            String updateUrl = ORDERS_API_URL + "/orders/" + orderId + "/status?status=PAID";
-            restTemplate.put(updateUrl, null);
-            System.out.println("✅ Order " + orderId + " updated to PAID.");
-
-            // ✅ 4. Notificar al notifications-service
-            try {
-                Map<String, Object> notification = new HashMap<>();
-                notification.put("order_id", orderId);
-                notification.put("status", "PAID");
-                notification.put("message", "Order #" + orderId + " has been paid successfully.");
-
-                restTemplate.postForEntity(
-                        NOTIFICATIONS_API_URL + "/notifications/send",
-                        notification,
-                        String.class
-                );
-                System.out.println("📨 Notification sent to notifications-service for order " + orderId);
-
-            } catch (Exception notifyEx) {
-                System.err.println("⚠️ Could not notify notifications-service: " + notifyEx.getMessage());
-            }
-
-            // ✅ 5. Devolver respuesta al cliente
-            return new PaymentResponse(orderId, "PAID", "Payment processed successfully for order " + orderId);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new PaymentResponse(orderId, "FAILED", "Error processing payment: " + e.getMessage());
+        if (orderResponse.getStatusCode() != HttpStatus.OK) {
+            return new PaymentResponse(
+                    request.getOrder_id(),
+                    "FAILED",
+                    "Order not found"
+            );
         }
+
+        // 2️⃣ Simular procesamiento del pago
+        try {
+            Thread.sleep(1000); // simula tiempo de procesamiento
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        // 3️⃣ Enviar notificación simple (simulada)
+        String notification = String.format(
+                "✅ Payment completed for order #%d, amount: %.2f",
+                request.getOrder_id(),
+                request.getAmount()
+        );
+
+        System.out.println(notification);
+
+        // 4️⃣ Devolver respuesta
+        return new PaymentResponse(
+                request.getOrder_id(),
+                "Payment successful",
+                notification
+        );
     }
 }
