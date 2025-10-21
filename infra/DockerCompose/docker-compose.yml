@@ -59,7 +59,7 @@ services:
 
   # === FRONTEND (React + Nginx) ===
   frontend:
-    image: juanchogonza98/e-commerce:frontendv1.0.0
+    image: juanchogonza98/e-commerce:frontendv1.0.4
     container_name: frontend
     expose:
       - "80"
