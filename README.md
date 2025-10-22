@@ -223,11 +223,13 @@ networks:
 ```
 
 🚀 Cómo Ejecutarlo
+
 Debes descargar el archivo docker-compose.yml que se encuentra en /infra/DockerCompose/docker-compose.yml
 Tambien en el lugar donde tengas este archivo debes crear una carpeta llamada /nginx-gateway y dentro de esta debes tener el archivo nginx.conf
 archivo nginx.conf
 
-```events {}
+```
+events {}
 
 http {
   sendfile on;
@@ -272,8 +274,9 @@ http {
   }
 }
 ```
+Luego simplemente ejecuta
 ```
-Luego simplemente ejecuta -> docker compose up -d
+ docker compose up -d
 ```
 🧪 Cómo Probar el Flujo Completo
 
