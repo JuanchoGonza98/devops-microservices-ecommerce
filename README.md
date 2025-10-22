@@ -113,14 +113,15 @@ server {
 
 El frontend está implementado en HTML + JavaScript.
 Se conecta al gateway para consumir los endpoints REST, por ejemplo:
-
+```
 fetch('http://localhost/api/orders', {
   method: 'POST',
   body: JSON.stringify(order),
   headers: { 'Content-Type': 'application/json' }
 });
+```
 🐳 Despliegue con Docker Compose
-
+```
 Archivo docker-compose.yml:
 version: "3.9"
 
@@ -219,13 +220,14 @@ networks:
   ecommerce-net:
     driver: bridge
 
-
+```
 
 🚀 Cómo Ejecutarlo
 Debes descargar el archivo docker-compose.yml que se encuentra en /infra/DockerCompose/docker-compose.yml
 Tambien en el lugar donde tengas este archivo debes crear una carpeta llamada /nginx-gateway y dentro de esta debes tener el archivo nginx.conf
 archivo nginx.conf
-events {}
+
+```events {}
 
 http {
   sendfile on;
@@ -269,7 +271,10 @@ http {
     }
   }
 }
+```
+```
 Luego simplemente ejecuta -> docker compose up -d
+```
 🧪 Cómo Probar el Flujo Completo
 
 Crear un producto → POST /products
