@@ -15,6 +15,7 @@ El objetivo principal es aplicar conceptos de **DevOps, contenedorización, orqu
 | **Products Service** | Java (Spring Boot) | Gestiona el catálogo de productos y stock. | Consumido por `orders-service` y `payments-service`. |
 | **Orders Service** | Python (FastAPI) | Crea pedidos y coordina la interacción entre productos y pagos. | Invoca `products-service` y `payments-service`. |
 | **Payments Service** | Java (Spring Boot) | Procesa los pagos y confirma transacciones además de mostrar mensaje de pagos. | Se comunica con `products-service` y `notifications-service`. |
+| **Users Service** | Python (FastAPI) | Gestiona la creación de usuarios y validación. | Se comunica con `orders-service`. |
 | **Infraestructura** | Docker + Docker Compose | Orquestación y red interna entre servicios. | Red Docker `bridge` compartida. |
 
 ---
@@ -46,7 +47,8 @@ devops-microservices-ecommerce/
 ├── products-service/           # Java Spring Boot
 ├── payments-service/            # Java Spring Boot
 ├── orders-service/              # Python FastAPI
-│
+├── users-service                #Python FastAPI
+|
 ├── infra/                      # Todo lo relacionado al despliegue
 |   docker-compose.yml          #Archivo importante para despliegue usando docker-compose
 │   nginx-gateway/               # Carpeta importante para configuración de los proxy_pass
@@ -77,6 +79,10 @@ devops-microservices-ecommerce/
 - Invoca `products-service` para verificar disponibilidad.
 - Llama a `payments-service` para ejecutar el pago.
 
+### 📦 **Users Service (Python - FastAPI)**
+- Gestiona la creación de usuarios.
+- Invoca a `orders-service` para asociar a un pedido.
+
 ---
 
 ## 🌐 **API Gateway (Nginx)**
@@ -97,6 +103,9 @@ server {
 
     location /payments/ {
         proxy_pass http://payments-service:8082/;
+    }
+  location /users/ {
+        proxy_pass http://users-service:8084/;
     }
 
 }
@@ -281,14 +290,14 @@ Luego simplemente ejecuta
  docker compose up -d
 ```
 ## 🧪 Cómo Probar el Flujo Completo
-
-1. **Crear un producto** → `POST /products`  
-2. **Registrar un pedido** → `POST /orders`  
-3. El `orders-service` consulta `products-service` para verificar stock y luego llama a `payments-service`.  
-4. El `payments-service` procesa el pago y muestra un mensaje en consola de que el pago fue procesado.    
+1. **Crear un usuario** -> `POST /users` 
+2. **Crear un producto** → `POST /products`  
+3. **Registrar un pedido** → `POST /orders`  
+4. El `orders-service` consulta `products-service` para verificar stock, asocia el producto a un usuario en `users-service`, luego llama a `payments-service`.  
+5. El `payments-service` procesa el pago y muestra un mensaje en consola de que el pago fue procesado.    
 
 👉 Puedes probar todo el flujo usando **Postman** o directamente desde el **frontend web**.
-
+**El front esta aun puliendose pero se pueden hacer las pruebas completas con Postman, 100% funcional**
 ---
 
 ## 🚀 Próximos Pasos
