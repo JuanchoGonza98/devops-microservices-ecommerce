@@ -14,8 +14,7 @@ El objetivo principal es aplicar conceptos de **DevOps, contenedorización, orqu
 | **API Gateway** | Nginx | Enruta las peticiones HTTP a los microservicios correctos. | Proxy hacia los microservicios backend. |
 | **Products Service** | Java (Spring Boot) | Gestiona el catálogo de productos y stock. | Consumido por `orders-service` y `payments-service`. |
 | **Orders Service** | Python (FastAPI) | Crea pedidos y coordina la interacción entre productos y pagos. | Invoca `products-service` y `payments-service`. |
-| **Payments Service** | Java (Spring Boot) | Procesa los pagos y confirma transacciones. | Se comunica con `products-service` y `notifications-service`. |
-| **Notifications Service** | Python (FastAPI) | Envía notificaciones del sistema (logs, emails, etc.). | Recibe eventos desde `payments-service`. |
+| **Payments Service** | Java (Spring Boot) | Procesa los pagos y confirma transacciones además de mostrar mensaje de pagos. | Se comunica con `products-service` y `notifications-service`. |
 | **Infraestructura** | Docker + Docker Compose | Orquestación y red interna entre servicios. | Red Docker `bridge` compartida. |
 
 ---
