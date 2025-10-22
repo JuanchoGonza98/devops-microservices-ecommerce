@@ -48,9 +48,10 @@ devops-microservices-ecommerce/
 ├── orders-service/              # Python FastAPI
 ├── notifications-service/       # Python FastAPI
 │
-├── nginx-gateway/               # API Gateway (Nginx)
-│   └── nginx.conf               # Configuración del enrutamiento
-│
+├── infra/                      # Todo lo relacionado al despliegue
+|   docker-compose.yml          #Archivo importante para despliegue usando docker-compose
+│   nginx-gateway/               # Carpeta importante para configuración de los proxy_pass
+│   |-- nginx.conf                  #Archivo de configuración de nginx
 ├── frontend/                    # Interfaz web (HTML + JS)
 │   ├── index.html
 │   └── app.js
@@ -107,6 +108,7 @@ server {
         proxy_pass http://notifications-service:8000/;
     }
 }
+```
 🖥️ Frontend
 
 El frontend está implementado en HTML + JavaScript.
