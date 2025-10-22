@@ -315,7 +315,7 @@ Luego simplemente ejecuta
 > 🚀 *Exploring DevOps, Cloud & Security*  
 > 💻 *Building & Learning Everyday*  
 
-📫 [LinkedIn](https://www.linkedin.com/in/juanandresgonzalezarevalos)  
+📫 [LinkedIn](https://www.linkedin.com/in/juan-andres-gonzalez-arevalos-75808a1b2s)  
 🐙 [GitHub](https://github.com/juanchogonza98)
 
 ---
