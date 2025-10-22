@@ -284,34 +284,41 @@ Luego simplemente ejecuta
 ```
  docker compose up -d
 ```
-🧪 Cómo Probar el Flujo Completo
+## 🧪 Cómo Probar el Flujo Completo
 
-Crear un producto → POST /products
+1. **Crear un producto** → `POST /products`  
+2. **Registrar un pedido** → `POST /orders`  
+3. El `orders-service` consulta `products-service` para verificar stock y luego llama a `payments-service`.  
+4. El `payments-service` procesa el pago y notifica al `notifications-service`.  
+5. El `notifications-service` confirma el evento (por ahora vía log o respuesta HTTP).  
 
-Crear un pedido → POST /orders
+👉 Puedes probar todo el flujo usando **Postman** o directamente desde el **frontend web**.
 
-El orders-service consulta products-service y luego invoca payments-service
+---
 
-payments-service procesa el pago y envía una notificación
+## 🚀 Próximos Pasos
 
-El notifications-service registra el evento en log o lo reenvía al frontend
+- [ ] Desplegar en **Kubernetes / VMware Tanzu**
+- [ ] Añadir observabilidad con **Prometheus + Grafana**
+- [ ] Implementar colas de mensajería (**RabbitMQ / Kafka**)
+- [ ] Agregar bases de datos (**MySQL / PostgreSQL**) para cada microservicio
+- [ ] Automatizar el pipeline **CI/CD con GitHub Actions**
 
-Puedes usar Postman para probar cada endpoint individualmente.
+---
 
-🛠️ Próximos Pasos
+## 👨‍💻 Autor
 
- Desplegar en Kubernetes / Tanzu
+**Juan Andrés González**  
+📍 Paraguay  
 
- Añadir observabilidad (Prometheus + Grafana)
+> 🐧 *Linux & Open Source Enthusiast*  
+> 🚀 *Exploring DevOps, Cloud & Security*  
+> 💻 *Building & Learning Everyday*  
 
- Implementar colas de mensajería (RabbitMQ o Kafka)
+📫 [LinkedIn](https://www.linkedin.com/in/juanandresgonzalezarevalos)  
+🐙 [GitHub](https://github.com/juanchogonza98)
 
- Agregar base de datos a cada microservicio (MySQL / PostgreSQL)
+---
 
- Pipeline CI/CD con GitHub Actions
-
-👨‍💻 Autor
-
-Juan Andrés González
-📍 Paraguay
+💬 *Si este proyecto te fue útil, no olvides dejar una ⭐ en el repositorio para apoyar el desarrollo.*
 
