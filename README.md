@@ -78,10 +78,6 @@ devops-microservices-ecommerce/
 - Invoca `products-service` para verificar disponibilidad.
 - Llama a `payments-service` para ejecutar el pago.
 
-### 📧 **Notifications Service (Python - FastAPI)**
-- Envía notificaciones (por ahora, simuladas via logs).
-- Escucha peticiones desde `payments-service` u otros servicios.
-
 ---
 
 ## 🌐 **API Gateway (Nginx)**
