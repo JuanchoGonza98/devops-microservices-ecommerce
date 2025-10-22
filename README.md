@@ -46,7 +46,6 @@ devops-microservices-ecommerce/
 ├── products-service/           # Java Spring Boot
 ├── payments-service/            # Java Spring Boot
 ├── orders-service/              # Python FastAPI
-├── notifications-service/       # Python FastAPI
 │
 ├── infra/                      # Todo lo relacionado al despliegue
 |   docker-compose.yml          #Archivo importante para despliegue usando docker-compose
@@ -100,9 +99,6 @@ server {
         proxy_pass http://payments-service:8082/;
     }
 
-    location /notifications/ {
-        proxy_pass http://notifications-service:8000/;
-    }
 }
 ```
 ## 🖥️ Frontend
@@ -289,8 +285,7 @@ Luego simplemente ejecuta
 1. **Crear un producto** → `POST /products`  
 2. **Registrar un pedido** → `POST /orders`  
 3. El `orders-service` consulta `products-service` para verificar stock y luego llama a `payments-service`.  
-4. El `payments-service` procesa el pago y notifica al `notifications-service`.  
-5. El `notifications-service` confirma el evento (por ahora vía log o respuesta HTTP).  
+4. El `payments-service` procesa el pago y muestra un mensaje en consola de que el pago fue procesado.    
 
 👉 Puedes probar todo el flujo usando **Postman** o directamente desde el **frontend web**.
 
