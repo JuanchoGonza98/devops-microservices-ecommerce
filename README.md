@@ -57,7 +57,7 @@ devops-microservices-ecommerce/
 │
 ├── docker-compose.yml           # Orquestación de contenedores
 └── README.md                    # Documentación del proyecto
-
+```
 
 ---
 
