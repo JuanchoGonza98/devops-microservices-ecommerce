@@ -105,16 +105,26 @@ server {
     }
 }
 ```
-🖥️ Frontend
+## 🖥️ Frontend
 
-El frontend está implementado en HTML + JavaScript.
-Se conecta al gateway para consumir los endpoints REST, por ejemplo:
-```
-fetch('http://localhost/api/orders', {
-  method: 'POST',
-  body: JSON.stringify(order),
-  headers: { 'Content-Type': 'application/json' }
-});
+El **frontend** está implementado en **HTML + JavaScript** y se conecta al **API Gateway (Nginx)** para consumir los endpoints REST de los microservicios.  
+Por ejemplo, para crear un pedido se puede usar el siguiente fragmento de código:
+
+```javascript
+// app.js
+async function createOrder(order) {
+  const response = await fetch('http://localhost/orders', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(order)
+  });
+
+  const data = await response.json();
+  console.log('Pedido creado:', data);
+}
+
 ```
 🐳 Despliegue con Docker Compose
 ```
