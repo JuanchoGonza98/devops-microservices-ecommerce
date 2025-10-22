@@ -8,29 +8,19 @@ El objetivo principal es aplicar conceptos de **DevOps, contenedorización, orqu
 
 ## 🧩 Arquitectura General
 
-┌───────────────────────────────┐
-│ Frontend │
-│ (HTML + JS, consumo del API) │
-└──────────────┬────────────────┘
-│
-┌──────▼───────┐
-│ API Gateway │ ← Nginx (reverse proxy)
-└──────┬───────┘
-│
-┌─────────────┴───────────────────────────┐
-│ Backend Microservices │
-│ │
-│ ┌──────────────────────────────┐ │
-│ │ products-service (Spring Boot)│ │
-│ ├──────────────────────────────┤ │
-│ │ orders-service (FastAPI) │ │
-│ ├──────────────────────────────┤ │
-│ │ payments-service (Spring Boot)│ │
-│ ├──────────────────────────────┤ │
-│ │ notifications-service (FastAPI)│ │
-│ └──────────────────────────────┘ │
-│ │
-└──────────────────────────────────────────┘
+| Componente | Tecnología | Descripción | Comunicación |
+|-------------|-------------|--------------|---------------|
+| **Frontend** | HTML + JavaScript | Interfaz de usuario que consume las APIs del gateway. | Envía solicitudes al `nginx-gateway`. |
+| **API Gateway** | Nginx | Enruta las peticiones HTTP a los microservicios correctos. | Proxy hacia los microservicios backend. |
+| **Products Service** | Java (Spring Boot) | Gestiona el catálogo de productos y stock. | Consumido por `orders-service` y `payments-service`. |
+| **Orders Service** | Python (FastAPI) | Crea pedidos y coordina la interacción entre productos y pagos. | Invoca `products-service` y `payments-service`. |
+| **Payments Service** | Java (Spring Boot) | Procesa los pagos y confirma transacciones. | Se comunica con `products-service` y `notifications-service`. |
+| **Notifications Service** | Python (FastAPI) | Envía notificaciones del sistema (logs, emails, etc.). | Recibe eventos desde `payments-service`. |
+| **Infraestructura** | Docker + Docker Compose | Orquestación y red interna entre servicios. | Red Docker `bridge` compartida. |
+
+---
+
+
 
 Los servicios se comunican internamente a través de una red Docker (`bridge`) y exponen sus APIs hacia el gateway Nginx.  
 El gateway enruta el tráfico externo hacia el microservicio correspondiente.
