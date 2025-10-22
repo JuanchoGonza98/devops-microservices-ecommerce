@@ -41,22 +41,22 @@ El gateway enruta el tráfico externo hacia el microservicio correspondiente.
 
 ## 📂 Estructura del Proyecto
 
+```bash
 devops-microservices-ecommerce/
+├── products-service/           # Java Spring Boot
+├── payments-service/            # Java Spring Boot
+├── orders-service/              # Python FastAPI
+├── notifications-service/       # Python FastAPI
 │
-├── products-service/ # Java Spring Boot
-├── payments-service/ # Java Spring Boot
-├── orders-service/ # Python FastAPI
-├── notifications-service/ # Python FastAPI
+├── nginx-gateway/               # API Gateway (Nginx)
+│   └── nginx.conf               # Configuración del enrutamiento
 │
-├── nginx-gateway/
-│ └── nginx.conf # Configuración del API Gateway
+├── frontend/                    # Interfaz web (HTML + JS)
+│   ├── index.html
+│   └── app.js
 │
-├── frontend/
-│ ├── index.html
-│ └── app.js
-│
-├── docker-compose.yml # Orquestación de contenedores
-└── README.md
+├── docker-compose.yml           # Orquestación de contenedores
+└── README.md                    # Documentación del proyecto
 
 
 ---
