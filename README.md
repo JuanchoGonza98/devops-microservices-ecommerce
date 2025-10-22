@@ -79,7 +79,7 @@ devops-microservices-ecommerce/
 - Invoca `products-service` para verificar disponibilidad.
 - Llama a `payments-service` para ejecutar el pago.
 
-### 📦 **Users Service (Python - FastAPI)**
+### 👤 **Users Service (Python - FastAPI)**
 - Gestiona la creación de usuarios.
 - Invoca a `orders-service` para asociar a un pedido.
 
