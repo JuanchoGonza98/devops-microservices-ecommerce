@@ -72,7 +72,7 @@ devops-microservices-ecommerce/
 ### 💳 **Payments Service (Java - Spring Boot)**
 - Procesa los pagos recibidos desde `orders-service`.
 - Se comunica con `products-service` para verificar disponibilidad del producto.
-- Notifica el estado del pago a `notifications-service` o al frontend.
+- Notifica el estado del pago al frontend.
 
 ### 📦 **Orders Service (Python - FastAPI)**
 - Gestiona la creación de pedidos.
