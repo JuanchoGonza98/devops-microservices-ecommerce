@@ -319,7 +319,7 @@ Luego simplemente ejecuta
 > 🚀 *Exploring DevOps, Cloud & Security*  
 > 💻 *Building & Learning Everyday*  
 
-📫 [LinkedIn](https://www.linkedin.com/in/juan-andres-gonzalez-arevalos-75808a1b2s)  
+📫 [LinkedIn](www.linkedin.com/in/juan-andres-gonzalez-arevalos-75808a1b2)  
 🐙 [GitHub](https://github.com/juanchogonza98)
 
 ---
